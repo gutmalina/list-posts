@@ -1,8 +1,10 @@
-import styles from './app.module.css';
+import Header from '../header/header';
 
 const App = () => {
   return (
-    <></>
+    <>
+      <Header/>
+    </>
   );
 }
 
