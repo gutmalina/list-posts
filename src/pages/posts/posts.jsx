@@ -37,7 +37,7 @@ const Posts = () => {
         {isPreloader ? (
           <Preloader />
         ) : (
-          listPosts.map((post) => <Post key={post.id} />)
+          listPosts.map((post) => <Post key={post.id} post={post}/>)
         )}
       </Container>
       <Pagination>

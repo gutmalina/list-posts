@@ -2,13 +2,22 @@ import {
   REQUESTED_POSTS,
   REQUESTED_POSTS_SUCCESS,
   REQUESTED_POSTS_FAILD,
+  REQUESTED_USER,
+  REQUESTED_USER_SUCCESS,
+  REQUESTED_USER_FAILD
 } from "../sagas/sagas";
 
 const initialStore = {
   posts: [],
   isPostsSuccess: false,
   isPostsFailed: false,
+
+  user: {},
+  isUserSuccess: false,
+  isUserFailed: false,
+
   isPreloader: false,
+
 };
 
 export const reducer = (state = initialStore, action) => {
@@ -16,7 +25,7 @@ export const reducer = (state = initialStore, action) => {
     case REQUESTED_POSTS: {
       return {
         ...state,
-        isPostsSuccess: true,
+        isPostsSuccess: false,
         isPostsFailed: false,
         isPreloader: true,
       };
@@ -25,7 +34,7 @@ export const reducer = (state = initialStore, action) => {
       return {
         ...state,
         posts: action.data,
-        isPostsSuccess: false,
+        isPostsSuccess: true,
         isPreloader: false,
       };
     }
@@ -35,6 +44,28 @@ export const reducer = (state = initialStore, action) => {
         isPostsSuccess: false,
         isPostsFailed: true,
         isPreloader: false,
+      };
+    }
+    case REQUESTED_USER: {
+      return {
+        ...state,
+        isUserSuccess: false,
+        isUserFailed: false,
+      };
+    }
+    case REQUESTED_USER_SUCCESS: {
+      return {
+        ...state,
+        user: action.data,
+        isUserSuccess: true,
+        isUserFailed: false,
+      };
+    }
+    case REQUESTED_USER_FAILD: {
+      return {
+        ...state,
+        isUserSuccess: false,
+        isUserFailed: true,
       };
     }
     default:

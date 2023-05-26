@@ -17,9 +17,9 @@ export const getComments = (postId) => {
   ;
 }
 
-export const getUsers = () => {
+export const getUser = (userId) => {
   return axios
-    .get(`${BASE_URL}/users`)
+    .get(`${BASE_URL}/users/${userId}`)
     .then(res=> res)
     .catch(err=>err)
   ;

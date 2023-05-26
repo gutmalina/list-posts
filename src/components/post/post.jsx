@@ -1,26 +1,28 @@
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
-import avatar from '../../images/avatar.svg';
-import Image from 'react-bootstrap/Image'
+import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
+import avatar from "../../images/avatar.svg";
+import Image from "react-bootstrap/Image";
+import { PATH_USER } from "../../utils/constans";
+import { Link } from "react-router-dom";
 
-const Post = () => {
+const Post = ({ post }) => {
+
   return (
     <>
-      <Card style={{ width: '18rem' }}>
+      <Card>
+        <Link to={`${PATH_USER}${post.userId}`}>
+          <Card.Header as="h5">
+            <Image src={avatar} width={50} height={50} />
+          </Card.Header>
+        </Link>
         <Card.Body>
-          <Card.Title>Загаловок поста</Card.Title>
-          <Card.Text>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </Card.Text>
-          <Card.Link href="#">
-            <Image src={avatar}/>
-          </Card.Link>
-          <Button variant="outline-primary">Primary</Button>{' '}
+          <Card.Title>{post.title}</Card.Title>
+          <Card.Text>{post.body}</Card.Text>
+          <Button variant="primary">Comments</Button>
         </Card.Body>
       </Card>
     </>
-  )
+  );
 };
 
 export default Post;
