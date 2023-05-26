@@ -5,8 +5,12 @@ import Form from "react-bootstrap/Form";
 import Dropdown from "react-bootstrap/Dropdown";
 import Preloader from "../../components/preloader/preloader";
 import Post from "../../components/post/post";
+import { useSelector } from "react-redux";
 
-const Posts = ({ isPreloader, listPosts }) => {
+const Posts = () => {
+  const isPreloader = useSelector(store=> store.isPreloader);
+  const listPosts = useSelector(store=> store.posts);
+
   return (
     <>
       <Form>

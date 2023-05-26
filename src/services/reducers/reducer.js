@@ -1,48 +1,40 @@
 import {
-  GET_POSTS,
-  GET_POSTS_SUCCESS,
-  GET_POSTS_FAILD,
-  TEST_REDUX
-} from "../actions/actions";
+  REQUESTED_POSTS,
+  REQUESTED_POSTS_SUCCESS,
+  REQUESTED_POSTS_FAILD,
+} from "../sagas/sagas";
 
 const initialStore = {
   posts: [],
-  isPostsRequest: false,
+  isPostsSuccess: false,
   isPostsFailed: false,
   isPreloader: false,
-  isTest: false
 };
 
 export const reducer = (state = initialStore, action) => {
   switch (action.type) {
-    case GET_POSTS: {
+    case REQUESTED_POSTS: {
       return {
         ...state,
-        isPostsRequest: true,
+        isPostsSuccess: true,
         isPostsFailed: false,
         isPreloader: true,
       };
     }
-    case GET_POSTS_SUCCESS: {
+    case REQUESTED_POSTS_SUCCESS: {
       return {
         ...state,
-        posts: action.posts,
-        isPostsRequest: false,
+        posts: action.data,
+        isPostsSuccess: false,
         isPreloader: false,
       };
     }
-    case GET_POSTS_FAILD: {
+    case REQUESTED_POSTS_FAILD: {
       return {
         ...state,
-        isPostsRequest: false,
+        isPostsSuccess: false,
         isPostsFailed: true,
         isPreloader: false,
-      };
-    }
-    case TEST_REDUX: {
-      return {
-        ...state,
-        isTest: true
       };
     }
     default:
