@@ -1,4 +1,4 @@
-import { getPosts, getUser } from "../../utils/api";
+import { getComments, getPosts, getUser } from "../../utils/api";
 import { call, put, takeEvery, all, take } from "redux-saga/effects";
 
 export const REQUESTED_POSTS = "REQUESTED_POSTS";
@@ -8,6 +8,10 @@ export const REQUESTED_POSTS_FAILD = "REQUESTED_POSTS_FAILD";
 export const REQUESTED_USER = "REQUESTED_USER";
 export const REQUESTED_USER_SUCCESS = "REQUESTED_USER_SUCCESS";
 export const REQUESTED_USER_FAILD = "REQUESTED_USER_FAILD";
+
+export const REQUESTED_COMMENTS = "REQUESTED_COMMENTS";
+export const REQUESTED_COMMENTS_SUCCESS = "REQUESTED_COMMENTS_SUCCESS";
+export const REQUESTED_COMMENTS_FAILD = "REQUESTED_COMMENTS_FAILD";
 
 /** получить все посты */
 function* getPostsWorker() {
@@ -39,7 +43,22 @@ function* getUserWatcher() {
   yield takeEvery(REQUESTED_USER, getUserWorker);
 }
 
+/** получить комментарии к посту */
+function* getCommentsWorker() {
+  const action = yield take(REQUESTED_COMMENTS);
+
+  try {
+    const { data } = yield call(getComments, action.payload.postId);
+    yield put({ type: REQUESTED_COMMENTS_SUCCESS, data: data });
+  } catch {
+    yield put({ type: REQUESTED_COMMENTS_FAILD });
+  }
+}
+
+function* getCommentsWatcher() {
+  yield takeEvery(REQUESTED_COMMENTS, getCommentsWorker);
+}
 
 export const rootSaga = function* root() {
-  yield all([getPostsWatcher(), getUserWatcher()]);
+  yield all([getPostsWatcher(), getUserWatcher(), getCommentsWatcher()]);
 };

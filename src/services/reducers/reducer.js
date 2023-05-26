@@ -4,7 +4,10 @@ import {
   REQUESTED_POSTS_FAILD,
   REQUESTED_USER,
   REQUESTED_USER_SUCCESS,
-  REQUESTED_USER_FAILD
+  REQUESTED_USER_FAILD,
+  REQUESTED_COMMENTS,
+  REQUESTED_COMMENTS_SUCCESS,
+  REQUESTED_COMMENTS_FAILD
 } from "../sagas/sagas";
 
 const initialStore = {
@@ -12,9 +15,13 @@ const initialStore = {
   isPostsSuccess: false,
   isPostsFailed: false,
 
-  user: {},
+  user: [],
   isUserSuccess: false,
   isUserFailed: false,
+
+  comments: [],
+  isCommentsSuccess: false,
+  isCommentsFailed: false,
 
   isPreloader: false,
 
@@ -66,6 +73,28 @@ export const reducer = (state = initialStore, action) => {
         ...state,
         isUserSuccess: false,
         isUserFailed: true,
+      };
+    }
+    case REQUESTED_COMMENTS: {
+      return {
+        ...state,
+        isCommentsSuccess: false,
+        isCommentsFailed: false,
+      };
+    }
+    case REQUESTED_COMMENTS_SUCCESS: {
+      return {
+        ...state,
+        comments: action.data,
+        isCommentsSuccess: true,
+        isCommentsFailed: false,
+      };
+    }
+    case REQUESTED_COMMENTS_FAILD: {
+      return {
+        ...state,
+        isCommentsSuccess: false,
+        isCommentsFailed: true,
       };
     }
     default:

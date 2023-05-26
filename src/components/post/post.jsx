@@ -4,8 +4,25 @@ import avatar from "../../images/avatar.svg";
 import Image from "react-bootstrap/Image";
 import { PATH_USER } from "../../utils/constans";
 import { Link } from "react-router-dom";
+import { REQUESTED_COMMENTS } from "../../services/sagas/sagas";
+import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
 
 const Post = ({ post }) => {
+  const dispatch = useDispatch();
+  const [idPost, setIdPost] = useState()
+
+useEffect(()=>{
+  if(idPost){
+    dispatch({
+      type: REQUESTED_COMMENTS,
+      payload: {
+        postId: idPost,
+      },
+    });
+  }
+
+}, [idPost])
 
   return (
     <>
@@ -18,7 +35,7 @@ const Post = ({ post }) => {
         <Card.Body>
           <Card.Title>{post.title}</Card.Title>
           <Card.Text>{post.body}</Card.Text>
-          <Button variant="primary">Comments</Button>
+          <Button variant="primary" onClick={()=>setIdPost(post.id)}>Comments</Button>
         </Card.Body>
       </Card>
     </>

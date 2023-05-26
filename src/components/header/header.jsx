@@ -5,6 +5,7 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 import avatar from "../../images/avatar.svg";
 import Image from "react-bootstrap/Image";
 import { PATH_ABOUT, PATH_HOME } from "../../utils/constans";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -29,8 +30,8 @@ const Header = () => {
             </Offcanvas.Header>
             <Offcanvas.Body>
               <Nav className="justify-content-end flex-grow-1 pe-3">
-                <Nav.Link href={PATH_HOME}>All posts</Nav.Link>
-                <Nav.Link href={PATH_ABOUT}>About me</Nav.Link>
+                <Nav.Link as={Link} to={PATH_HOME}>All posts</Nav.Link>
+                <Nav.Link as={Link} to={PATH_ABOUT}>About me</Nav.Link>
               </Nav>
             </Offcanvas.Body>
           </Navbar.Offcanvas>
