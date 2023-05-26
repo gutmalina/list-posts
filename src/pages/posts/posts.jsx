@@ -3,8 +3,9 @@ import Pagination from 'react-bootstrap/Pagination';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Dropdown from 'react-bootstrap/Dropdown';
+import Preloader from '../../components/preloader/preloader';
 
-const Posts = () => {
+const Posts = ({isPreloader}) => {
   return (
     <>
       <Form>
@@ -27,7 +28,9 @@ const Posts = () => {
           </Dropdown.Menu>
         </Dropdown>
       </Form>
-      <Container>Здесь будут отрисовываться все посты</Container>
+      <Container>
+        {isPreloader? <Preloader /> : 'Здесь будут отрисовываться все посты'}
+      </Container>
       <Pagination>
         <Pagination.First />
         <Pagination.Prev />
