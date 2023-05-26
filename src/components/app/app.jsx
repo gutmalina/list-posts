@@ -1,12 +1,20 @@
 import Posts from '../../pages/posts/posts';
 import User from '../../pages/user/user';
+import About from '../../pages/about/about';
 import Header from '../header/header';
+import Preloader from '../preloader/preloader';
+import { Routes, Route } from 'react-router-dom';
+import { PATH_HOME, PATH_ABOUT, PATH_USER } from '../../utils/constans';
 
 const App = () => {
   return (
     <>
       <Header/>
-      <User/>
+      <Routes>
+        <Route path={PATH_HOME} element={<Posts />}/>
+        <Route path={PATH_ABOUT} element={<About />}/>
+        <Route path={PATH_USER} element={<User />}/>
+      </Routes>
     </>
   );
 }
