@@ -4,12 +4,12 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Dropdown from "react-bootstrap/Dropdown";
 import Preloader from "../../components/preloader/preloader";
-import Post from "../../components/post/post";
 import { useSelector } from "react-redux";
+import RenderPosts from "../../components/render-posts/render-posts";
 
 const Posts = () => {
   const isPreloader = useSelector(store=> store.isPreloader);
-  const listPosts = useSelector(store=> store.posts);
+  const posts = useSelector(store=> store.posts);
 
   return (
     <>
@@ -37,7 +37,7 @@ const Posts = () => {
         {isPreloader ? (
           <Preloader />
         ) : (
-          listPosts.map((post) => <Post key={post.id} post={post}/>)
+          <RenderPosts listPosts={posts}/>
         )}
       </Container>
       <Pagination>
