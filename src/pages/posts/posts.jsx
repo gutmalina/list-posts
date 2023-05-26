@@ -1,11 +1,12 @@
 import Container from "react-bootstrap/Container";
-import Pagination from 'react-bootstrap/Pagination';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Dropdown from 'react-bootstrap/Dropdown';
-import Preloader from '../../components/preloader/preloader';
+import Pagination from "react-bootstrap/Pagination";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import Dropdown from "react-bootstrap/Dropdown";
+import Preloader from "../../components/preloader/preloader";
+import Post from "../../components/post/post";
 
-const Posts = ({isPreloader}) => {
+const Posts = ({ isPreloader, listPosts }) => {
   return (
     <>
       <Form>
@@ -29,7 +30,11 @@ const Posts = ({isPreloader}) => {
         </Dropdown>
       </Form>
       <Container>
-        {isPreloader? <Preloader /> : 'Здесь будут отрисовываться все посты'}
+        {isPreloader ? (
+          <Preloader />
+        ) : (
+          listPosts.map((post) => <Post key={post.id} />)
+        )}
       </Container>
       <Pagination>
         <Pagination.First />
@@ -49,7 +54,7 @@ const Posts = ({isPreloader}) => {
         <Pagination.Last />
       </Pagination>
     </>
-  )
+  );
 };
 
 export default Posts;

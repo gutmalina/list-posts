@@ -6,15 +6,23 @@ import { Routes, Route } from "react-router-dom";
 import { PATH_HOME, PATH_ABOUT, PATH_USER } from "../../utils/constans";
 import { useEffect, useState } from "react";
 import { getPosts } from "../../utils/api";
+import { useDispatch } from "react-redux";
+import { testAction } from "../../services/actions/actions";
 
 const App = () => {
   const [isPreloader, setIsPreloader] = useState(false);
+  const [listPosts, setListPosts] = useState([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setIsPreloader(true)
+    dispatch(testAction())
     const timer = setTimeout(() => {
       getPosts().then((res) => {
-        setIsPreloader(false)
+        if(res.status === 200){
+          setIsPreloader(false)
+          setListPosts(res.data)
+        }
         console.log(res);
       });
     }, 5000);
@@ -28,7 +36,7 @@ const App = () => {
       <Routes>
         <Route
           path={PATH_HOME}
-          element={<Posts isPreloader={isPreloader}/>}
+          element={<Posts isPreloader={isPreloader} listPosts={listPosts}/>}
         />
         <Route path={PATH_ABOUT} element={<About />} />
         <Route path={PATH_USER} element={<User />} />
