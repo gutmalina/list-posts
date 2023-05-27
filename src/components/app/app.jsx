@@ -3,11 +3,10 @@ import User from "../../pages/user/user";
 import About from "../../pages/about/about";
 import Header from "../header/header";
 import { Routes, Route } from "react-router-dom";
-import { PATH_HOME, PATH_ABOUT, PATH_USER, PATH_USER_ID } from "../../utils/constans";
+import { PATH_HOME, PATH_ABOUT, PATH_USER_ID } from "../../utils/constans";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { REQUESTED_POSTS } from "../../services/sagas/sagas";
-import { getUsers } from "../../utils/api";
 
 const App = () => {
   const dispatch = useDispatch();

@@ -7,7 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useMemo } from "react";
 import { REQUESTED_USER } from "../../services/sagas/sagas";
 import { useNavigate, useParams } from "react-router";
-import RenderPosts from "../../components/render-posts/render-posts";
+import RenderCard from "../../components/render-card/render-card";
+import {TYPE_CARD_USER } from "../../utils/constans";
 
 const User = () => {
   const user = useSelector((store) => store.user);
@@ -52,7 +53,7 @@ const User = () => {
         </Card>
       )}
       <Container>
-        {listPostsUser && <RenderPosts listPosts={listPostsUser} />}
+        {listPostsUser && <RenderCard arrayCards={listPostsUser} type={TYPE_CARD_USER}/>}
       </Container>
     </>
   );

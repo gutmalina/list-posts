@@ -7,7 +7,8 @@ import {
   REQUESTED_USER_FAILD,
   REQUESTED_COMMENTS,
   REQUESTED_COMMENTS_SUCCESS,
-  REQUESTED_COMMENTS_FAILD
+  REQUESTED_COMMENTS_FAILD,
+  DELETE_COMMENTS_SUCCESS
 } from "../sagas/sagas";
 
 const initialStore = {
@@ -85,7 +86,7 @@ export const reducer = (state = initialStore, action) => {
     case REQUESTED_COMMENTS_SUCCESS: {
       return {
         ...state,
-        comments: action.data,
+        comments: [...state.comments.concat(action.data)],
         isCommentsSuccess: true,
         isCommentsFailed: false,
       };
@@ -95,6 +96,12 @@ export const reducer = (state = initialStore, action) => {
         ...state,
         isCommentsSuccess: false,
         isCommentsFailed: true,
+      };
+    }
+    case DELETE_COMMENTS_SUCCESS: {
+      return {
+        ...state,
+        comments: [...state.comments.filter((item)=> item.postId !== action.data)]
       };
     }
     default:

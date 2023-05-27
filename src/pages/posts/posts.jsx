@@ -5,7 +5,8 @@ import Form from "react-bootstrap/Form";
 import Dropdown from "react-bootstrap/Dropdown";
 import Preloader from "../../components/preloader/preloader";
 import { useSelector } from "react-redux";
-import RenderPosts from "../../components/render-posts/render-posts";
+import RenderCard from "../../components/render-card/render-card";
+import { TYPE_CARD_POST } from "../../utils/constans";
 
 const Posts = () => {
   const isPreloader = useSelector(store=> store.isPreloader);
@@ -37,7 +38,7 @@ const Posts = () => {
         {isPreloader ? (
           <Preloader />
         ) : (
-          <RenderPosts listPosts={posts}/>
+          <RenderCard arrayCards={posts} type={TYPE_CARD_POST}/>
         )}
       </Container>
       <Pagination>
