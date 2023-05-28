@@ -7,16 +7,58 @@ import Preloader from "../../components/preloader/preloader";
 import { useSelector } from "react-redux";
 import RenderCard from "../../components/render-card/render-card";
 import { TYPE_CARD_POST } from "../../utils/constans";
+import { useCallback, useEffect, useState } from "react";
 
 const Posts = () => {
-  const isPreloader = useSelector(store=> store.isPreloader);
-  const posts = useSelector(store=> store.posts);
+  const isPreloader = useSelector((store) => store.isPreloader);
+  const posts = useSelector((store) => store.posts);
+  const [renderPosts, setRenderPosts] = useState([]);
+  const [filterPosts, setFilterPosts] = useState([]);
+  const [value, setValue] = useState("");
+
+  useEffect(() => {
+    posts && setRenderPosts(posts);
+  }, [posts]);
+
+  const sortPosts = (key) => {
+    const arrNew = [...posts].sort((a, b) => {
+      if (a[key] < b[key]) {
+        return -1;
+      }
+      if (a[key] > b[key]) {
+        return 1;
+      }
+      return 0;
+    });
+    setRenderPosts(arrNew);
+  };
+
+  const getValue = (e) => {
+    const { value } = e.target;
+    setValue((prevState) => ([...prevState], value));
+  };
+
+  useEffect(() => {
+    const arr = renderPosts.filter((post) => {
+      if (value) {
+        return post.title.startsWith(value);
+      } else {
+        return post;
+      }
+    });
+    setFilterPosts(arr);
+  }, [value, renderPosts]);
 
   return (
     <>
       <Form>
         <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Control type="email" placeholder="Поиск по заголовку" />
+          <Form.Control
+            type="email"
+            placeholder="Поиск по заголовку"
+            value={value}
+            onChange={getValue}
+          />
         </Form.Group>
 
         <Button variant="primary" type="submit">
@@ -28,17 +70,20 @@ const Posts = () => {
             Сортировка
           </Dropdown.Toggle>
           <Dropdown.Menu>
-            <Dropdown.Item href="#/action-1">По алфавиту</Dropdown.Item>
-            <Dropdown.Item href="#/action-2">По дате создания</Dropdown.Item>
-            <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+            <Dropdown.Item href="#/action-1" onClick={() => sortPosts("title")}>
+              Sort alphabetically
+            </Dropdown.Item>
+            <Dropdown.Item href="#/action-2" onClick={() => sortPosts("id")}>
+              Sort by creation date
+            </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </Form>
       <Container>
-        {isPreloader ? (
-          <Preloader />
+        {renderPosts && filterPosts ? (
+          <RenderCard arrayCards={filterPosts} type={TYPE_CARD_POST} />
         ) : (
-          <RenderCard arrayCards={posts} type={TYPE_CARD_POST}/>
+          <RenderCard arrayCards={renderPosts} type={TYPE_CARD_POST} />
         )}
       </Container>
       <Pagination>
