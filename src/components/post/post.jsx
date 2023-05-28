@@ -23,7 +23,8 @@ const Post = ({ post, type }) => {
   const dispatch = useDispatch();
   const [showComments, setShowComments] = useState(false);
   const [textBtn, setTextBtn] = useState(TEXT_BTN_SHOW_COMMENTS);
-
+  const title = post.title[0].toLocaleUpperCase() + post.title.slice(1)
+  const body = post.body[0].toLocaleUpperCase() + post.body.slice(1)
   const arrayComments = useMemo(() => {
     return comments.filter((comment) => comment.postId === post.id);
   }, [comments, post.id]);
@@ -57,7 +58,7 @@ const Post = ({ post, type }) => {
 
   return (
     <>
-      <Card>
+      <Card className="mb-3" style={{border: '1px solid #0d6efd'}}>
         {type === `${TYPE_CARD_POST}` && (
           <Link to={`${PATH_USER}${post.userId}`}>
             <Card.Header as="h5">
@@ -66,8 +67,8 @@ const Post = ({ post, type }) => {
           </Link>
         )}
         <Card.Body>
-          <Card.Title>{post.title}</Card.Title>
-          <Card.Text>{post.body}</Card.Text>
+          <Card.Title className="mb-3">{title}</Card.Title>
+          <Card.Text>{body}</Card.Text>
           <Button variant="primary" onClick={toggleShowComments}>
             {textBtn}
           </Button>

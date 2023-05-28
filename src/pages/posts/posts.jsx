@@ -1,5 +1,4 @@
-import Container from "react-bootstrap/Container";
-import Button from "react-bootstrap/Button";
+import Stack from "react-bootstrap/Stack";
 import Form from "react-bootstrap/Form";
 import Dropdown from "react-bootstrap/Dropdown";
 import Preloader from "../../components/preloader/preloader";
@@ -8,7 +7,12 @@ import RenderCard from "../../components/render-card/render-card";
 import { TYPE_CARD_POST } from "../../utils/constans";
 import { useEffect, useState } from "react";
 import Paging from "../../components/paging/paging";
-import { PLACEHOLDER_FILTER_TITLE, TEXT_BTN_SORTING } from "../../utils/constans";
+import {
+  PLACEHOLDER_FILTER_TITLE,
+  TEXT_BTN_SORTING,
+  TEXT_SORT_ALPHABETICALLY,
+  TEXT_SORT_ID
+} from "../../utils/constans";
 
 const Posts = () => {
   const isPreloader = useSelector((store) => store.isPreloader);
@@ -77,40 +81,38 @@ const Posts = () => {
 
   return (
     <>
-      <Form>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Control
-            type="email"
-            placeholder={PLACEHOLDER_FILTER_TITLE}
-            value={value}
-            onChange={getValue}
-          />
-        </Form.Group>
-        <Dropdown>
-          <Dropdown.Toggle variant="success" id="dropdown-basic">
+      <Stack direction="horizontal" gap={3} className="p-3 mb-4">
+        <Form.Control
+          placeholder={PLACEHOLDER_FILTER_TITLE}
+          value={value}
+          onChange={getValue}
+          style={{fontWeight: "bold"}}
+          size="lg"
+        />
+        <div className="vr" />
+        <Dropdown >
+          <Dropdown.Toggle size="lg" variant="primary" id="dropdown-basic" className="">
             {TEXT_BTN_SORTING}
           </Dropdown.Toggle>
           <Dropdown.Menu>
             <Dropdown.Item
               href="#/action-1"
               onClick={() => handleSortPosts("title")}
-            >
-              Sort alphabetically
+            >{TEXT_SORT_ALPHABETICALLY}
             </Dropdown.Item>
             <Dropdown.Item
               href="#/action-2"
               onClick={() => handleSortPosts("id")}
-            >
-              Sort by creation date
+            >{TEXT_SORT_ID}
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
-      </Form>
-      <Container>
+      </Stack>
+      <Stack className="p-3 mb-4">
         {posts && (
           <RenderCard arrayCards={renderPosts()} type={TYPE_CARD_POST} />
         )}
-      </Container>
+      </Stack>
       <Paging
         allPage={allPage}
         setActivePage={setActivePage}

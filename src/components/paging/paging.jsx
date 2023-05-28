@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import Pagination from "react-bootstrap/Pagination";
+import Stack from "react-bootstrap/Stack";
 
 const Paging = ({ allPage, setActivePage, activePage }) => {
   const selectPage = (pageNumber) => {
@@ -14,7 +15,7 @@ const Paging = ({ allPage, setActivePage, activePage }) => {
 
   return (
     <>
-      <Pagination>
+      <Pagination className="p-3 mb-4">
         {allPage &&
           allPage.map((number) => (
             <Pagination.Item
