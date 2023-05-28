@@ -1,5 +1,4 @@
 import Container from "react-bootstrap/Container";
-import Pagination from "react-bootstrap/Pagination";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -7,20 +6,27 @@ import Preloader from "../../components/preloader/preloader";
 import { useSelector } from "react-redux";
 import RenderCard from "../../components/render-card/render-card";
 import { TYPE_CARD_POST } from "../../utils/constans";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import Paging from "../../components/paging/paging";
+import { PLACEHOLDER_FILTER_TITLE, TEXT_BTN_SORTING } from "../../utils/constans";
 
 const Posts = () => {
   const isPreloader = useSelector((store) => store.isPreloader);
   const posts = useSelector((store) => store.posts);
-  const [renderPosts, setRenderPosts] = useState([]);
+  const [sortPosts, setSortPosts] = useState([]);
   const [filterPosts, setFilterPosts] = useState([]);
   const [value, setValue] = useState("");
+  const [activePage, setActivePage] = useState(1);
+  const [numberPostsPerPage] = useState(5);
+  const lastIndexPage = activePage * numberPostsPerPage;
+  const firstIndexPage = lastIndexPage - numberPostsPerPage;
+  const allPage = [];
 
   useEffect(() => {
-    posts && setRenderPosts(posts);
+    posts && setSortPosts(posts);
   }, [posts]);
 
-  const sortPosts = (key) => {
+  const handleSortPosts = (key) => {
     const arrNew = [...posts].sort((a, b) => {
       if (a[key] < b[key]) {
         return -1;
@@ -30,7 +36,7 @@ const Posts = () => {
       }
       return 0;
     });
-    setRenderPosts(arrNew);
+    setSortPosts(arrNew);
   };
 
   const getValue = (e) => {
@@ -39,15 +45,35 @@ const Posts = () => {
   };
 
   useEffect(() => {
-    const arr = renderPosts.filter((post) => {
+    const arr = sortPosts.filter((post) => {
       if (value) {
-        return post.title.startsWith(value);
+        return post.title.includes(value);
       } else {
         return post;
       }
     });
     setFilterPosts(arr);
-  }, [value, renderPosts]);
+  }, [value, sortPosts]);
+
+  const renderPosts = () => {
+    if (filterPosts) {
+      return filterPosts.slice(firstIndexPage, lastIndexPage);
+    } else {
+      return sortPosts.slice(firstIndexPage, lastIndexPage);
+    }
+  };
+
+  const totalAllPosts = () => {
+    if (filterPosts) {
+      return filterPosts.length;
+    } else {
+      return sortPosts.length;
+    }
+  };
+
+  for (let i = 1; i <= Math.ceil(totalAllPosts() / numberPostsPerPage); i++) {
+    allPage.push(i);
+  }
 
   return (
     <>
@@ -55,54 +81,41 @@ const Posts = () => {
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Control
             type="email"
-            placeholder="Поиск по заголовку"
+            placeholder={PLACEHOLDER_FILTER_TITLE}
             value={value}
             onChange={getValue}
           />
         </Form.Group>
-
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
-
         <Dropdown>
           <Dropdown.Toggle variant="success" id="dropdown-basic">
-            Сортировка
+            {TEXT_BTN_SORTING}
           </Dropdown.Toggle>
           <Dropdown.Menu>
-            <Dropdown.Item href="#/action-1" onClick={() => sortPosts("title")}>
+            <Dropdown.Item
+              href="#/action-1"
+              onClick={() => handleSortPosts("title")}
+            >
               Sort alphabetically
             </Dropdown.Item>
-            <Dropdown.Item href="#/action-2" onClick={() => sortPosts("id")}>
+            <Dropdown.Item
+              href="#/action-2"
+              onClick={() => handleSortPosts("id")}
+            >
               Sort by creation date
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </Form>
       <Container>
-        {renderPosts && filterPosts ? (
-          <RenderCard arrayCards={filterPosts} type={TYPE_CARD_POST} />
-        ) : (
-          <RenderCard arrayCards={renderPosts} type={TYPE_CARD_POST} />
+        {posts && (
+          <RenderCard arrayCards={renderPosts()} type={TYPE_CARD_POST} />
         )}
       </Container>
-      <Pagination>
-        <Pagination.First />
-        <Pagination.Prev />
-        <Pagination.Item>{1}</Pagination.Item>
-        <Pagination.Ellipsis />
-
-        <Pagination.Item>{10}</Pagination.Item>
-        <Pagination.Item>{11}</Pagination.Item>
-        <Pagination.Item active>{12}</Pagination.Item>
-        <Pagination.Item>{13}</Pagination.Item>
-        <Pagination.Item disabled>{14}</Pagination.Item>
-
-        <Pagination.Ellipsis />
-        <Pagination.Item>{20}</Pagination.Item>
-        <Pagination.Next />
-        <Pagination.Last />
-      </Pagination>
+      <Paging
+        allPage={allPage}
+        setActivePage={setActivePage}
+        activePage={activePage}
+      />
     </>
   );
 };

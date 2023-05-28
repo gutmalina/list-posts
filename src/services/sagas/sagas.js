@@ -20,7 +20,7 @@ function* getPostsWorker() {
   try {
     const { data } = yield call(getPosts);
     yield put({ type: REQUESTED_POSTS_SUCCESS, data: data });
-  } catch {
+  } catch (err) {
     yield put({ type: REQUESTED_POSTS_FAILD });
   }
 }
@@ -34,7 +34,7 @@ function* getUserWorker(action) {
   try {
     const { data } = yield call(getUser, action.payload.userId);
     yield put({ type: REQUESTED_USER_SUCCESS, data: data });
-  } catch {
+  } catch (err) {
     yield put({ type: REQUESTED_USER_FAILD });
   }
 }
@@ -48,7 +48,7 @@ function* getCommentsWorker(action) {
   try {
     const { data } = yield call(getComments, action.payload.postId);
     yield put({ type: REQUESTED_COMMENTS_SUCCESS, data: data });
-  } catch {
+  } catch (err) {
     yield put({ type: REQUESTED_COMMENTS_FAILD });
   }
 }
