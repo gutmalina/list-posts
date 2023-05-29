@@ -106,13 +106,13 @@ const Posts = () => {
           </Dropdown.Toggle>
           <Dropdown.Menu>
             <Dropdown.Item
-              href="#/action-1"
+              href="#"
               onClick={() => handleSortPosts("title")}
             >
               {TEXT_SORT_ALPHABETICALLY}
             </Dropdown.Item>
             <Dropdown.Item
-              href="#/action-2"
+              href="#"
               onClick={() => handleSortPosts("id")}
             >
               {TEXT_SORT_ID}
