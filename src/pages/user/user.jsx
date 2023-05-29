@@ -6,10 +6,10 @@ import avatar from "../../images/avatar.svg";
 import Button from "react-bootstrap/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useMemo } from "react";
-import { REQUESTED_USER } from "../../services/sagas/sagas";
 import { useNavigate, useParams } from "react-router";
 import RenderCard from "../../components/render-card/render-card";
 import { TYPE_CARD_USER, TEXT_BTN_GO_BACK } from "../../utils/constans";
+import { requestUserAction } from "../../services/actions/action";
 
 const User = () => {
   const user = useSelector((store) => store.user);
@@ -24,12 +24,7 @@ const User = () => {
   };
 
   useEffect(() => {
-    dispatch({
-      type: REQUESTED_USER,
-      payload: {
-        userId: id,
-      },
-    });
+    dispatch(requestUserAction(id));
   }, []);
 
   const listPostsUser = useMemo(() => {
@@ -48,7 +43,7 @@ const User = () => {
               src={avatar}
               style={{ maxWidth: 200, maxHeight: 250 }}
             />
-            <Card style={{border: 'none'}}>
+            <Card style={{ border: "none" }}>
               <Card.Body>
                 <Card.Title>{user.name}</Card.Title>
               </Card.Body>
@@ -59,7 +54,7 @@ const User = () => {
                 )}
               </ListGroup>
               <Button variant="primary" onClick={goBack}>
-              {TEXT_BTN_GO_BACK}
+                {TEXT_BTN_GO_BACK}
               </Button>
             </Card>
           </Stack>

@@ -6,13 +6,13 @@ import { Routes, Route } from "react-router-dom";
 import { PATH_HOME, PATH_ABOUT, PATH_USER_ID } from "../../utils/constans";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { REQUESTED_POSTS } from "../../services/sagas/sagas";
+import { requestPostsAction } from "../../services/actions/action";
 
 const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch({ type: REQUESTED_POSTS });
+    dispatch(requestPostsAction());
   }, []);
 
   return (

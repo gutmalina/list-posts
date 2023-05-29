@@ -9,7 +9,7 @@ import {
   REQUESTED_COMMENTS_SUCCESS,
   REQUESTED_COMMENTS_FAILD,
   DELETE_COMMENTS_SUCCESS
-} from "../sagas/sagas";
+} from "../constants";
 
 const initialStore = {
   posts: [],

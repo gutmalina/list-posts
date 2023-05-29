@@ -10,33 +10,28 @@ import {
   TYPE_CARD_POST,
 } from "../../utils/constans";
 import { Link } from "react-router-dom";
-import {
-  DELETE_COMMENTS,
-  REQUESTED_COMMENTS,
-} from "../../services/sagas/sagas";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useMemo, useState } from "react";
 import RenderCard from "../render-card/render-card";
+import {
+  deleteCommentsAction,
+  requestCommentsAction,
+} from "../../services/actions/action";
 
 const Post = ({ post, type }) => {
   const comments = useSelector((store) => store.comments);
   const dispatch = useDispatch();
   const [showComments, setShowComments] = useState(false);
   const [textBtn, setTextBtn] = useState(TEXT_BTN_SHOW_COMMENTS);
-  const title = post.title[0].toLocaleUpperCase() + post.title.slice(1)
-  const body = post.body[0].toLocaleUpperCase() + post.body.slice(1)
+  const title = post.title[0].toLocaleUpperCase() + post.title.slice(1);
+  const body = post.body[0].toLocaleUpperCase() + post.body.slice(1);
   const arrayComments = useMemo(() => {
     return comments.filter((comment) => comment.postId === post.id);
   }, [comments, post.id]);
 
   useEffect(() => {
     if (showComments) {
-      dispatch({
-        type: REQUESTED_COMMENTS,
-        payload: {
-          postId: post.id,
-        },
-      });
+      dispatch(requestCommentsAction(post.id));
     }
   }, [showComments]);
 
@@ -44,12 +39,7 @@ const Post = ({ post, type }) => {
     if (showComments) {
       setShowComments(false);
       setTextBtn(TEXT_BTN_SHOW_COMMENTS);
-      dispatch({
-        type: DELETE_COMMENTS,
-        payload: {
-          postId: post.id,
-        },
-      });
+      dispatch(deleteCommentsAction(post.id));
     } else {
       setShowComments(true);
       setTextBtn(TEXT_BTN_HIDE_COMMENTS);
@@ -58,7 +48,7 @@ const Post = ({ post, type }) => {
 
   return (
     <>
-      <Card className="mb-3" style={{border: '1px solid #0d6efd'}}>
+      <Card className="mb-3" style={{ border: "1px solid #0d6efd" }}>
         {type === `${TYPE_CARD_POST}` && (
           <Link to={`${PATH_USER}${post.userId}`}>
             <Card.Header as="h5">

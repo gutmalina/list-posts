@@ -11,7 +11,7 @@ const About = () => {
         <Card.Header as="h5" className="mb-4">
           <Card.Title>{ABOUT_ME.experience}</Card.Title>
         </Card.Header>
-        <Card.Body style={{border: '1px solid #0d6efd'}}>
+        <Card.Body style={{ border: "1px solid #0d6efd" }}>
           <Table striped bordered hover className="mb-0">
             <thead>
               <tr>
@@ -26,7 +26,11 @@ const About = () => {
                   <tr key={index}>
                     <td>{index}</td>
                     <td>{item.name}</td>
-                    <td style={{color: '#0d6efd'}}><Nav.Link target="_blank" href={item.to}>{item.link}</Nav.Link></td>
+                    <td style={{ color: "#0d6efd" }}>
+                      <Nav.Link target="_blank" href={item.to}>
+                        {item.link}
+                      </Nav.Link>
+                    </td>
                   </tr>
                 ))}
             </tbody>

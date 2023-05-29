@@ -1,27 +1,29 @@
 import { getComments, getPosts, getUser } from "../../utils/api";
 import { call, put, takeEvery, all } from "redux-saga/effects";
+import {
+  requestPostsSuccessAction,
+  requestPostsErrorAction,
+  requestUserSuccessAction,
+  requestUserErrorAction,
+  requestCommentsSuccessAction,
+  requestCommentsErrorAction,
+  deleteCommentsSuccessAction,
+} from "../actions/action";
 
-export const REQUESTED_POSTS = "REQUESTED_POSTS";
-export const REQUESTED_POSTS_SUCCESS = "REQUESTED_POSTS_SUCCESS";
-export const REQUESTED_POSTS_FAILD = "REQUESTED_POSTS_FAILD";
-
-export const REQUESTED_USER = "REQUESTED_USER";
-export const REQUESTED_USER_SUCCESS = "REQUESTED_USER_SUCCESS";
-export const REQUESTED_USER_FAILD = "REQUESTED_USER_FAILD";
-
-export const REQUESTED_COMMENTS = "REQUESTED_COMMENTS";
-export const REQUESTED_COMMENTS_SUCCESS = "REQUESTED_COMMENTS_SUCCESS";
-export const REQUESTED_COMMENTS_FAILD = "REQUESTED_COMMENTS_FAILD";
-export const DELETE_COMMENTS = "DELETE_COMMENTS";
-export const DELETE_COMMENTS_SUCCESS = "DELETE_COMMENTS_SUCCESS";
+import {
+  REQUESTED_POSTS,
+  REQUESTED_USER,
+  REQUESTED_COMMENTS,
+  DELETE_COMMENTS,
+} from "../constants";
 
 /** получить все посты */
 function* getPostsWorker() {
   try {
     const { data } = yield call(getPosts);
-    yield put({ type: REQUESTED_POSTS_SUCCESS, data: data });
+    yield put(requestPostsSuccessAction(data));
   } catch (err) {
-    yield put({ type: REQUESTED_POSTS_FAILD });
+    yield put(requestPostsErrorAction());
   }
 }
 
@@ -32,10 +34,10 @@ function* getPostsWatcher() {
 /** получить данные пользователя */
 function* getUserWorker(action) {
   try {
-    const { data } = yield call(getUser, action.payload.userId);
-    yield put({ type: REQUESTED_USER_SUCCESS, data: data });
+    const { data } = yield call(getUser, action.userId);
+    yield put(requestUserSuccessAction(data));
   } catch (err) {
-    yield put({ type: REQUESTED_USER_FAILD });
+    yield put(requestUserErrorAction());
   }
 }
 
@@ -46,10 +48,10 @@ function* getUserWatcher() {
 /** получить комментарии к посту */
 function* getCommentsWorker(action) {
   try {
-    const { data } = yield call(getComments, action.payload.postId);
-    yield put({ type: REQUESTED_COMMENTS_SUCCESS, data: data });
+    const { data } = yield call(getComments, action.postId);
+    yield put(requestCommentsSuccessAction(data));
   } catch (err) {
-    yield put({ type: REQUESTED_COMMENTS_FAILD });
+    yield put(requestCommentsErrorAction);
   }
 }
 
@@ -59,7 +61,7 @@ function* getCommentsWatcher() {
 
 /** удалить комментарии к посту */
 function* deleteCommentsWorker(action) {
-  yield put({ type: DELETE_COMMENTS_SUCCESS, data: action.payload.postId });
+  yield put(deleteCommentsSuccessAction(action.postId));
 }
 
 function* deleteCommentsWatcher() {
