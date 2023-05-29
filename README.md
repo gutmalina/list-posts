@@ -1,19 +1,19 @@
-# list-posts
+# Тестовое задание на вакансию Junior Frontend developer (React)
 
-Отборочное задание для соискателей на позицию Junior Frontend developer (React).
-Необходимо реализовать SPA (single page application) на React.
+<p padding="0" align="center">~~~~~~~~~~</p>
+<a  href="https://gutmalina.github.io/list-posts/" target="_blank" align="center"><img src="./readme/videogift.gif" width="100%" alt="Демо"></a>
+<p padding="0" align="center">~~~~~~~~~~</p>
 
-Ключевые технологии, которые необходимо использовать:
-React
-React-bootstrap
-React-router
-Axios
-Redux
-Redux-saga
-Git 
+### Стэк:
+* React
+* React-bootstrap
+* React-router
+* Axios
+* Redux
+* Redux-saga
+* Git 
 
-Описание задачи:
-
+### Задание:
 Нужно создать сайт с постами, где будут присутствовать 3 страницы (роута):
 
 1. Список постов (главная страница), где будут располагаться все посты.
@@ -26,7 +26,6 @@ Git
 
  
 Подробное описание
-
 1. Список постов (главная страница)
 
 1.1. Должна содержать список всех постов
@@ -66,8 +65,6 @@ Git
 3.3. Добавить лоадер по аналогии с п.1.8.
 
 3.4. Сделать кнопку «Назад», при нажатии на которую произойдет переход на главную страницу.
-
-
  
 
 P.S:
@@ -91,3 +88,6 @@ P.S:
  
 
 В результате выполнения задания задеплойте ваше SPA на хостинг (GitHub Pages / GitLab Pages / Heroku или прочие) и приложите ссылку на ваш удалённый репозиторий.
+
+### Ссылки:
+* :mag_right: [Открыть проект](https://gutmalina.github.io/list-posts/)
