@@ -84,7 +84,6 @@ export const reducer = (state = initialStore, action) => {
         ...state,
         isCommentsSuccess: false,
         isCommentsFailed: false,
-        isPreloader: true,
       };
     }
     case REQUESTED_COMMENTS_SUCCESS: {
@@ -93,7 +92,6 @@ export const reducer = (state = initialStore, action) => {
         comments: [...state.comments.concat(action.data)],
         isCommentsSuccess: true,
         isCommentsFailed: false,
-        isPreloader: false,
       };
     }
     case REQUESTED_COMMENTS_FAILD: {
@@ -101,7 +99,6 @@ export const reducer = (state = initialStore, action) => {
         ...state,
         isCommentsSuccess: false,
         isCommentsFailed: true,
-        isPreloader: false,
       };
     }
     case DELETE_COMMENTS_SUCCESS: {
