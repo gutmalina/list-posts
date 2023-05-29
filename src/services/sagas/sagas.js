@@ -1,5 +1,5 @@
 import { getComments, getPosts, getUser } from "../../utils/api";
-import { call, put, takeEvery, all } from "redux-saga/effects";
+import { call, put, takeEvery, all, delay } from "redux-saga/effects";
 import {
   requestPostsSuccessAction,
   requestPostsErrorAction,
@@ -19,6 +19,7 @@ import {
 
 /** получить все посты */
 function* getPostsWorker() {
+  yield delay(5000)
   try {
     const { data } = yield call(getPosts);
     yield put(requestPostsSuccessAction(data));
@@ -33,6 +34,7 @@ function* getPostsWatcher() {
 
 /** получить данные пользователя */
 function* getUserWorker(action) {
+  yield delay(5000)
   try {
     const { data } = yield call(getUser, action.userId);
     yield put(requestUserSuccessAction(data));

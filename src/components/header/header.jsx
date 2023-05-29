@@ -50,7 +50,7 @@ const Header = () => {
           <Navbar.Offcanvas
             id="offcanvasNavbar-expand"
             aria-labelledby="offcanvasNavbarLabel-expand-false"
-            placement="end"
+            placement="start"
             size="lg"
           >
             <Offcanvas.Header closeButton>

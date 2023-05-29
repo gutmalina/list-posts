@@ -11,7 +11,7 @@ import {
   PLACEHOLDER_FILTER_TITLE,
   TEXT_BTN_SORTING,
   TEXT_SORT_ALPHABETICALLY,
-  TEXT_SORT_ID
+  TEXT_SORT_ID,
 } from "../../utils/constans";
 
 const Posts = () => {
@@ -79,6 +79,10 @@ const Posts = () => {
     allPage.push(i);
   }
 
+  const handleClick = () => {
+    setValue("");
+  };
+
   return (
     <>
       <Stack direction="horizontal" gap={3} className="p-3 mb-4">
@@ -86,31 +90,41 @@ const Posts = () => {
           placeholder={PLACEHOLDER_FILTER_TITLE}
           value={value}
           onChange={getValue}
-          style={{fontWeight: "bold"}}
+          style={{ fontWeight: "bold" }}
           size="lg"
         />
+        <button className="inner-btn" onClick={handleClick} style={{border: "1px solid #0d6efd", backgroundColor: 'transparent', fontSize: 24, borderRadius: 3}}>X</button>
         <div className="vr" />
-        <Dropdown >
-          <Dropdown.Toggle size="lg" variant="primary" id="dropdown-basic" className="">
+        <Dropdown>
+          <Dropdown.Toggle
+            size="lg"
+            variant="primary"
+            id="dropdown-basic"
+            className=""
+          >
             {TEXT_BTN_SORTING}
           </Dropdown.Toggle>
           <Dropdown.Menu>
             <Dropdown.Item
               href="#/action-1"
               onClick={() => handleSortPosts("title")}
-            >{TEXT_SORT_ALPHABETICALLY}
+            >
+              {TEXT_SORT_ALPHABETICALLY}
             </Dropdown.Item>
             <Dropdown.Item
               href="#/action-2"
               onClick={() => handleSortPosts("id")}
-            >{TEXT_SORT_ID}
+            >
+              {TEXT_SORT_ID}
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </Stack>
       <Stack className="p-3 mb-4">
-        {posts && (
+        {posts && !isPreloader ? (
           <RenderCard arrayCards={renderPosts()} type={TYPE_CARD_POST} />
+        ) : (
+          <Preloader />
         )}
       </Stack>
       <Paging

@@ -14,6 +14,7 @@ export const TEXT_SORT_ID = "Sort by creation date";
 export const TEXT_MENU = 'MENU';
 export const TEXT_LINK_POSTS = 'All posts';
 export const TEXT_LINK_ABOUT = 'About me';
+export const TEXT_PRELOADER = "Loading data"
 export const PLACEHOLDER_FILTER_TITLE = "Keyword search in the title";
 export const ABOUT_ME = {
   name: "Гуткевич Марина",

@@ -10,8 +10,10 @@ import { useNavigate, useParams } from "react-router";
 import RenderCard from "../../components/render-card/render-card";
 import { TYPE_CARD_USER, TEXT_BTN_GO_BACK } from "../../utils/constans";
 import { requestUserAction } from "../../services/actions/action";
+import Preloader from "../../components/preloader/preloader";
 
 const User = () => {
+  const isPreloader = useSelector((store) => store.isPreloader);
   const user = useSelector((store) => store.user);
   const posts = useSelector((store) => store.posts);
   const dispatch = useDispatch();
@@ -35,36 +37,40 @@ const User = () => {
 
   return (
     <>
-      <Stack className="p-3">
-        {user && (
-          <Stack direction="horizontal" gap={2} className="mx-auto mb-4">
-            <Card.Img
-              variant="top"
-              src={avatar}
-              style={{ maxWidth: 200, maxHeight: 250 }}
-            />
-            <Card style={{ border: "none" }}>
-              <Card.Body>
-                <Card.Title>{user.name}</Card.Title>
-              </Card.Body>
-              <ListGroup className="list-group-flush">
-                <ListGroup.Item>{user.email}</ListGroup.Item>
-                {user.address && (
-                  <ListGroup.Item>{user.address.city}</ListGroup.Item>
-                )}
-              </ListGroup>
-              <Button variant="primary" onClick={goBack}>
-                {TEXT_BTN_GO_BACK}
-              </Button>
-            </Card>
-          </Stack>
-        )}
-        <Container>
-          {listPostsUser && (
-            <RenderCard arrayCards={listPostsUser} type={TYPE_CARD_USER} />
+      {!isPreloader ? (
+        <Stack className="p-3">
+          {user && (
+            <Stack direction="horizontal" gap={2} className="mx-auto mb-4">
+              <Card.Img
+                variant="top"
+                src={avatar}
+                style={{ maxWidth: 200, maxHeight: 250 }}
+              />
+              <Card style={{ border: "none" }}>
+                <Card.Body>
+                  <Card.Title>{user.name}</Card.Title>
+                </Card.Body>
+                <ListGroup className="list-group-flush">
+                  <ListGroup.Item>{user.email}</ListGroup.Item>
+                  {user.address && (
+                    <ListGroup.Item>{user.address.city}</ListGroup.Item>
+                  )}
+                </ListGroup>
+                <Button variant="primary" onClick={goBack}>
+                  {TEXT_BTN_GO_BACK}
+                </Button>
+              </Card>
+            </Stack>
           )}
-        </Container>
-      </Stack>
+          <Container>
+            {listPostsUser && (
+              <RenderCard arrayCards={listPostsUser} type={TYPE_CARD_USER} />
+            )}
+          </Container>
+        </Stack>
+      ) : (
+        <Preloader />
+      )}
     </>
   );
 };
